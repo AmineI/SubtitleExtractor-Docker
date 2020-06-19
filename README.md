@@ -23,18 +23,18 @@ The Docker image size is kept very small by using multi-stage build to compile m
 
 ##### Extract all subtitles & all attachments
 ```
-docker run --rm -it -v /AFolderWithMKVFiles:/data amine1u1/batchextractsubs
+docker run --rm -it -v /AFolderWithMKVFiles:/data amine1u1/subtitleextractor
 ```
 
 
 ##### Extract subtitles of specific languages, & all attachments 
 ```
-docker run --rm -it -v /APathWithMKVFiles:/data -e 'LANGS=eng fre' amine1u1/batchextractsubs
+docker run --rm -it -v /APathWithMKVFiles:/data -e 'LANGS=eng fre' amine1u1/subtitleextractor
 ```
 
 ##### Extract all subtitles to a specific extension (ffmpeg does any eventual conversion), & all attachments
 ```
-docker run --rm -it -v /AFolderWithMKVFiles:/data -e 'SUBEXT=srt' amine1u1/batchextractsubs
+docker run --rm -it -v /AFolderWithMKVFiles:/data -e 'SUBEXT=srt' amine1u1/subtitleextractor
 ```
 
 Credits & thanks to the ffmpeg developer team.
