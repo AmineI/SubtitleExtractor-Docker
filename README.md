@@ -1,12 +1,14 @@
-# BatchExtractSubtitles
+# Subtitle Extractor
 
-This works best as a Docker container hosted to provide subtitles & attachments in an automated fashion.
+This extracts subtitles & attachments of all **.mkv** files in the volume mounted to /data. They are extracted in a subfolder for each file.
 
-It extracts subtitles & attachments of all **.mkv** files in the folder mounted to /data. They are extracted in a subfolder for each file.
+It works best as a Docker container hosted to provide subtitles & attachments in an automated fashion.
 
-Subtitles are saved as .ass files by default following a template, and attachments keep their original filename.
+The Docker image size is kept very small by using multi-stage build to compile minimal FFMPEG binaries from source.
 
-For each file `FileName.mkv`, its attachments & subtitles will be saved under `FileName/`, and the subtitles will be named `SubtitleName_SubtitleNumber_lang_FileName.OUT_EXT`, with OUT_EXT defaults to ass.
+Subtitles are saved as .ass files by default following a template, and attachments keep their original filename and extension.
+
+For each file `FileName.mkv`, its attachments & subtitles will be saved under `FileName/`, and the subtitles will be named `SubtitleName_SubtitleNumber_lang_FileName.OUT_EXT`, with OUT_EXT that defaults to 'ass'.
 
 #### Environment variables
 
@@ -18,28 +20,28 @@ For each file `FileName.mkv`, its attachments & subtitles will be saved under `F
 
    example : ```OUT_EXT=srt```
 
-- `SUBFOLDER` If defined, all subtitles & attachments will be extracted in a subfolder of `SUBFOLDER`.
+- `SUBFOLDER` If defined, all subtitles & attachments will be extracted in a subfolder of `SUBFOLDER` : In "SUBFOLDER/videofilename/", instead of only "videofilename/".
 
-   example : ```SUBFOLDER=subtitles```. Resulting files will be stored in "SUBFOLDER/videofilename/", instead of only "videofilename/"
+   example : ```SUBFOLDER=subtitles```.
 
 #### Usage Examples
 
 ##### Extract all subtitles & all attachments
 
 ``` {bash}
-docker run --rm -it -v /AFolderWithMKVFiles:/data amine1u1/batchextractsubs
+docker run --rm -it -v /AFolderWithMKVFiles:/data amine1u1/subtitleextractor
 ```
 
 ##### Extract subtitles of specific languages, & all attachments
 
-``` {bash}
-docker run --rm -it -v /APathWithMKVFiles:/data -e 'LANGS=eng fre' amine1u1/batchextractsubs
+```{bash}
+docker run --rm -it -v /APathWithMKVFiles:/data -e 'LANGS=eng fre' amine1u1/subtitleextractor
 ```
 
 ##### Extract all subtitles to a specific extension (ffmpeg does any eventual conversion), & all attachments
 
-``` {bash}
-docker run --rm -it -v /AFolderWithMKVFiles:/data -e 'OUT_EXT=srt' amine1u1/batchextractsubs
+```{bash}
+docker run --rm -it -v /AFolderWithMKVFiles:/data -e 'OUT_EXT=srt' amine1u1/subtitleextractor
 ```
 
 Credits & thanks to the ffmpeg developer team.
