@@ -1,0 +1,3 @@
+sut:
+    build: .
+    entrypoint: "/docker-test-entrypoint.sh"
