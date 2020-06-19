@@ -1,10 +1,12 @@
-# BatchExtractSubtitles
+# Subtitle Extractor
 
-This works best as a Docker container hosted to provide subtitles & attachments in an automated fashion.
+This works best as a Docker container hosted to provide subtitles & attachments in an automated fashion. 
 
-It extracts subtitles & attachments of all **.mkv** files in the folder mounted to /data. They are extracted in a subfolder for each file.
+It extracts subtitles & attachments of all **.mkv** files in the volume mounted to /data. They are extracted in a subfolder for each file.
 
 Subtitles are saved as .ass files by default following a template, and attachments keep their original filename.
+
+The Docker image size is kept very small by using multi-stage build to compile minimal FFMPEG binaries from source. 
 
 #### Environment variables 
 
