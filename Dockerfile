@@ -1,5 +1,4 @@
 FROM alpine:3.12 AS builder
-#Prevent prompts blocking the docker build, like packages dependencies such as 
 ARG FFMPEG_VERSION=4.3
 
 WORKDIR /builder
