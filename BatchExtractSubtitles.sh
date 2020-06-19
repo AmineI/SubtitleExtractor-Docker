@@ -5,7 +5,7 @@ extractSubsAndAttachments() {
     file="${1}"
     basename="${1%.*}"
     : ${OUT_EXT:="ass"} #Sets the default value if not specified
-    originaldir=pwd
+    originaldir=$(pwd)
 
     if [[ ! -z $SUBFOLDER ]]; then
         mkdir -p $SUBFOLDER
