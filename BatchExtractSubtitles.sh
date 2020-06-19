@@ -4,7 +4,7 @@ set -e
 extractSubsAndAttachments() {
     file="${1}"
     basename="${1%.*}"
-    : ${SUBEXT:="ass"} #Sets the default value if not specified
+    : ${OUT_EXT:="ass"} #Sets the default value if not specified
     originaldir=pwd
 
     if [[ ! -z $SUBFOLDER ]]; then
@@ -36,10 +36,10 @@ extractSubsAndAttachments() {
             fi
         fi
 
-        echo "Extracting ${lang} subtitle #${idx} named '$title' to .${SUBEXT}, from ${file}"
+        echo "Extracting ${lang} subtitle #${idx} named '$title' to .${OUT_EXT}, from ${file}"
         formattedTitle="${title//[^[:alnum:] -]/}" #We format the track title to avoid issues using it in a filename.
         ffmpeg -y -nostdin -hide_banner -loglevel error -i \
-            "${originaldir}/${file}" -map 0:"$idx" "${formattedTitle}_${idx}_${lang}_$basename.$SUBEXT"
+            "${originaldir}/${file}" -map 0:"$idx" "${formattedTitle}_${idx}_${lang}_${basename}.${OUT_EXT}"
         # The -y option replaces existing files.
 
     done <<<"${subsmappings}")

@@ -12,7 +12,7 @@ apk add --no-cache wget
 
 wget -q -O test_video.mkv "https://mkvtoolnix.download/samples/vsshort-vorbis-subs.mkv"
 
-SUBEXT="ass" /docker-entrypoint.sh
+OUT_EXT="ass" /docker-entrypoint.sh
 
 cd test_video
 if ls | grep '.ass'; then
@@ -25,7 +25,7 @@ cd ..
 
 rm -rf test_video
 
-SUBEXT="srt" /docker-entrypoint.sh
+OUT_EXT="srt" /docker-entrypoint.sh
 
 cd test_video
 if ls | grep '.srt'; then
