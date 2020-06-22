@@ -15,7 +15,7 @@ extractSubsAndAttachments() {
     mkdir -p "$basename"
     cd "$basename"
 
-    subsmappings=$(ffprobe -loglevel error -select_streams s -show_entries stream=index:stream_tags=language,title -of csv=p=0 "${originaldir}/${file}")
+    subsmappings=$(ffprobe -loglevel error -select_streams s -show_entries stream=index,codec_name:stream_tags=language,title -of csv=p=0 "${originaldir}/${file}")
     #Results formatted as : 2,eng,title
 
     #IFS is the command delimiter - https://bash.cyberciti.biz/guide/$IFS
@@ -23,8 +23,15 @@ extractSubsAndAttachments() {
     OLDIFS=$IFS
     IFS=,
 
-    (while read idx lang title; do
-
+    (while read idx codec lang title; do
+        if [[ "$codec" == *pgs* ]]; then
+            echo "codec $codec, forcing output format."
+            EXT="mks"
+            forceArgument=("-c:s" "copy")
+        else
+            forceArgument=()
+            EXT=$OUT_EXT
+        fi
         if [ -z "$lang" ]; then
             lang="und"
             #When the subtitle language isn't present in the file, we note it as undefined and extract it regardless of the parameters
@@ -39,7 +46,7 @@ extractSubsAndAttachments() {
         echo "Extracting ${lang} subtitle #${idx} named '$title' to .${OUT_EXT}, from ${file}"
         formattedTitle="${title//[^[:alnum:] -]/}" #We format the track title to avoid issues using it in a filename.
         ffmpeg -y -nostdin -hide_banner -loglevel error -i \
-            "${originaldir}/${file}" -map 0:"$idx" "${formattedTitle}_${idx}_${lang}_${basename}.${OUT_EXT}"
+        "${originaldir}/${file}" "${forceArgument[@]}" -map 0:"$idx" "${formattedTitle}_${idx}_${lang}_${basename}.${EXT}"
         # The -y option replaces existing files.
 
     done <<<"${subsmappings}")
