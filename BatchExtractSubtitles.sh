@@ -26,8 +26,8 @@ extractSubsAndAttachments() {
     (while read idx codec lang title; do
         if [[ "$codec" == *pgs* ]]; then
             echo "codec $codec, forcing output format."
-            EXT="mks"
-            forceArgument=("-f" "-c" "copy")
+            EXT="sup"
+            forceArgument=("-c:s" "copy" )
         else
             forceArgument=()
             EXT=$OUT_EXT
@@ -43,10 +43,10 @@ extractSubsAndAttachments() {
             fi
         fi
 
-        echo "Extracting ${lang} subtitle #${idx} named '$title' to .${OUT_EXT}, from ${file}"
+        echo "Extracting ${lang} subtitle #${idx} named '$title' to .${EXT}, from ${file}"
         formattedTitle="${title//[^[:alnum:] -]/}" #We format the track title to avoid issues using it in a filename.
         ffmpeg -y -nostdin -hide_banner -loglevel error -i \
-        "${originaldir}/${file}" "${forceArgument[@]}" -map 0:"$idx" "${formattedTitle}_${idx}_${lang}_${basename}.${EXT}"
+        "${originaldir}/${file}" -map 0:"$idx" "${forceArgument[@]}" "${formattedTitle}_${idx}_${lang}_${basename}.${EXT}"
         # The -y option replaces existing files.
 
     done <<<"${subsmappings}")
