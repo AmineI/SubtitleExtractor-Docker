@@ -27,7 +27,7 @@ extractSubsAndAttachments() {
         if [[ "$codec" == *pgs* ]]; then
             echo "codec $codec, forcing output format."
             EXT="mks"
-            forceArgument=("-f" "-c" "copy" )
+            forceArgument=("-f" "-c" "copy")
         else
             forceArgument=()
             EXT=$OUT_EXT
@@ -46,7 +46,7 @@ extractSubsAndAttachments() {
         echo "Extracting ${lang} subtitle #${idx} named '$title' to .${OUT_EXT}, from ${file}"
         formattedTitle="${title//[^[:alnum:] -]/}" #We format the track title to avoid issues using it in a filename.
         ffmpeg -y -nostdin -hide_banner -loglevel error -i \
-        "${originaldir}/${file}""${forceArgument[@]}"  -map 0:"$idx" "${formattedTitle}_${idx}_${lang}_${basename}.${EXT}"
+        "${originaldir}/${file}" "${forceArgument[@]}" -map 0:"$idx" "${formattedTitle}_${idx}_${lang}_${basename}.${EXT}"
         # The -y option replaces existing files.
 
     done <<<"${subsmappings}")
