@@ -24,7 +24,9 @@ For each file `FileName.mkv`, its attachments & subtitles will be saved under `F
 
    example : ```SUBFOLDER=subtitles```.
 
-#### Usage Examples
+### Usage Examples
+
+Mounting folders as volume, in a Linux environment (Run these from WSL2 if you are using this on Windows)
 
 ##### Extract all subtitles & all attachments
 
@@ -44,6 +46,7 @@ docker run --rm -it -v /APathWithMKVFiles:/data -e 'LANGS=eng fre' amine1u1/subt
 docker run --rm -it -v /AFolderWithMKVFiles:/data -e 'OUT_EXT=srt' amine1u1/subtitleextractor
 ```
 
+### Notes, credits & Licences
 Credits & thanks to the ffmpeg developer team.
 
 The code in the repo is subject to the unlicence, and the docker image, containing a compiled ffmpeg static binary, is under GPL.
