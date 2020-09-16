@@ -1,6 +1,6 @@
 # Subtitle Extractor
 
-This extracts subtitles & attachments of all **.mkv** files in the volume mounted to /data. They are extracted in a subfolder for each file.
+This extracts embedded subtitles & attachments of all **.mkv** files in the volume mounted to /data. They are extracted in a subfolder for each file.
 
 It works best as a Docker container hosted to provide subtitles & attachments in an automated fashion.
 
@@ -8,7 +8,7 @@ The Docker image size is kept very small by using multi-stage build to compile m
 
 Subtitles are saved as .ass files by default following a template, and attachments keep their original filename and extension.
 
-For each file `FileName.mkv`, its attachments & subtitles will be saved under `FileName/`, and the subtitles will be named `SubtitleName_SubtitleNumber_lang_FileName.OUT_EXT`, with OUT_EXT that defaults to 'ass'.
+For each file `FileName.mkv`, its attachments & subtitles will be saved under `FileName/`, and the subtitles will be named `SubtitleName_SubtitleNumber_lang_FileName.OUT_EXT`, with OUT_EXT being 'ass' by default.
 
 #### Environment variables
 
@@ -16,7 +16,7 @@ For each file `FileName.mkv`, its attachments & subtitles will be saved under `F
 
    example : ```LANGS=eng fre```
 
-- `OUT_EXT` defines the ouput extension of the subtitles files. Accepts any subtitle format supported by ffmpeg. Defaults to 'ass'.
+- `OUT_EXT` defines the ouput extension of the subtitles files. Accepts any subtitle format supported by ffmpeg, and is properly converted from the input subtitle. Defaults to 'ass'.
 
    example : ```OUT_EXT=srt```
 
@@ -49,4 +49,4 @@ docker run --rm -it -v /AFolderWithMKVFiles:/data -e 'OUT_EXT=srt' amine1u1/subt
 ### Notes, credits & Licences
 Credits & thanks to the ffmpeg developer team.
 
-The code in the repo is subject to the unlicence, and the docker image, containing a compiled ffmpeg static binary, is under GPL.
+The code in the repo is subject to the unlicence, and the Docker Image, containing a compiled ffmpeg static binary, is under GPL.
